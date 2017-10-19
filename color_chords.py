@@ -44,16 +44,49 @@ intervals = {
 	"Diminished" : (3,6)
 }
 
-#scales = {
-	
-#}
+"""
+Major Scale: R, W, W, H, W, W, W, H
+Natural Minor Scale: R, W, H, W, W, H, W, W
+Harmonic Minor Scale: R, W, H, W, W, H, 1 1/2, H   (notice the step and a half)
+Melodic Minor Scale: going up is: R, W, H, W, W, W, W, H
+going down is: R, W, W, H, W, W, H, W
+Dorian Mode is: R, W, H, W, W, W, H, W
+Mixolydian Mode is: R, W, W, H, W, W, H, W
+Ahava Raba Mode is: R, H, 1 1/2, H, W, H, W, W
+A minor pentatonic blues scale (no sharped 5) is: R, 1 1/2, W, W, 1 1/2, W
+"""
+R = 0
+W = 2
+H = 1
+scales = {
+	'Major' : (R, W, W, H, W, W, W, H),
+	'Natural_Minor' : (R, W, H, W, W, H, W, W)
+}
 
 cmajor_scale = [('C', 'Major'), ('D','Minor'), ('E','Minor'), ('F','Major'), ('G','Major'), ('A', 'Minor'), ('B','Diminished')]
+
+
+def get_scale(root, scale_type):
+	root_index = notes.index(root)
+
+	scale_formula = scales[scale_type]
+
+	#inidices = [root_index]
+	tally = root_index
+	inidices = []
+	for s in scale_formula:
+		tally += s
+		inidices.append(tally % len(notes))
+
+	return list([notes[i] for i in inidices])
+
+print(get_scale('A', 'Major'))
+print(get_scale('A', 'Natural_Minor'))
+
 
 def quit():
 	global run
 	run = False
-
 
 def get_triad(root, intervals=(4,7)):
 
@@ -103,9 +136,9 @@ def display_random_chord():
 """
 run program
 """
-
+"""
 run = True
 while run:
 	display_random_chord()
 
-
+"""
