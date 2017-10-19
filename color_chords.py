@@ -100,9 +100,18 @@ def chord_is_in_scale(scale_notes, root, chord_type):
 		return True
 	return False
 
-scale_notes = get_scale('E', 'Major')
-print (chord_is_in_scale(scale_notes, 'E', 'Major'))
+# get chords in a scale
+def get_scale_chords(scale_notes):
+	scale_chords = []
+	for n in scale_notes:
+		for ct in chord_types:
+			if chord_is_in_scale(scale_notes, n, ct):
+				scale_chords.append((n,ct))
+	return scale_chords
 
+#tmp testing
+scale_notes = get_scale('A', 'Natural Minor')
+print (get_scale_chords(scale_notes))
 
 
 def display_random_chord():
