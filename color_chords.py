@@ -44,23 +44,17 @@ intervals = {
 	"Diminished" : (3,6)
 }
 
-"""
-Major Scale: R, W, W, H, W, W, W, H
-Natural Minor Scale: R, W, H, W, W, H, W, W
-Harmonic Minor Scale: R, W, H, W, W, H, 1 1/2, H   (notice the step and a half)
-Melodic Minor Scale: going up is: R, W, H, W, W, W, W, H
-going down is: R, W, W, H, W, W, H, W
-Dorian Mode is: R, W, H, W, W, W, H, W
-Mixolydian Mode is: R, W, W, H, W, W, H, W
-Ahava Raba Mode is: R, H, 1 1/2, H, W, H, W, W
-A minor pentatonic blues scale (no sharped 5) is: R, 1 1/2, W, W, 1 1/2, W
-"""
+
 R = 0
 W = 2
 H = 1
 scales = {
 	'Major' : (R, W, W, H, W, W, W, H),
-	'Natural_Minor' : (R, W, H, W, W, H, W, W)
+	'Natural Minor' : (R, W, H, W, W, H, W, W),
+	'Harmonic Minor' : (R, W, H, W, W, H, 3, H),
+	'Dorian Mode' : (R, W, H, W, W, W, H, W),
+	'Mixolydian Mode' : (R, W, W, H, W, W, H, W),
+	'Ahava Raba Mode' : (R, H, 3, H, W, H, W, W)
 }
 
 cmajor_scale = [('C', 'Major'), ('D','Minor'), ('E','Minor'), ('F','Major'), ('G','Major'), ('A', 'Minor'), ('B','Diminished')]
@@ -80,8 +74,9 @@ def get_scale(root, scale_type):
 
 	return list([notes[i] for i in inidices])
 
-print(get_scale('A', 'Major'))
-print(get_scale('A', 'Natural_Minor'))
+print(get_scale('E', 'Major'))
+print(get_scale('A', 'Natural Minor'))
+print(get_scale('A', 'Dorian Mode'))
 
 
 def quit():
@@ -95,6 +90,20 @@ def get_triad(root, intervals=(4,7)):
 	fifth = notes[(root_index + intervals[1]) % len(notes)]
 	
 	return (root, third, fifth)
+
+
+# check if attempted chord is in scale
+def chord_is_in_scale(scale_notes, root, chord_type):
+	chord_notes = get_triad(root, intervals[chord_type])
+
+	if set(chord_notes) <= set(scale_notes):
+		return True
+	return False
+
+scale_notes = get_scale('E', 'Major')
+print (chord_is_in_scale(scale_notes, 'E', 'Major'))
+
+
 
 def display_random_chord():
 
@@ -131,6 +140,9 @@ def display_random_chord():
 	if 'q' == chr(c & 255):
 		quit()
 	cv2.destroyAllWindows()
+
+
+
 
 
 """
