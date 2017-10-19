@@ -28,6 +28,14 @@ note_colors = {
 	'G#' : (69,28,121)
 }
 
+#reverse note_colors witten in wrong order!
+for n in note_colors:
+	first = note_colors[n][0]
+	second = note_colors[n][1]
+	third = note_colors[n][2]
+
+	note_colors[n] = (third, second, first)
+
 chord_types = ["Major", "Minor"]
 thirds = {
 	'Major' : 4,
@@ -52,6 +60,7 @@ def display_random_chord():
 	chord_type = random.choice(chord_types)
 	chord_notes = get_triad(note, thirds[chord_type])
 	chord_colors = [note_colors[note] for note in chord_notes]
+
 
 	chord_name = note + "-" + chord_type + " : " + str(chord_notes)
 
