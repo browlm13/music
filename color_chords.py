@@ -62,10 +62,8 @@ cmajor_scale = [('C', 'Major'), ('D','Minor'), ('E','Minor'), ('F','Major'), ('G
 
 def get_scale(root, scale_type):
 	root_index = notes.index(root)
-
 	scale_formula = scales[scale_type]
 
-	#inidices = [root_index]
 	tally = root_index
 	inidices = []
 	for s in scale_formula:
@@ -73,11 +71,6 @@ def get_scale(root, scale_type):
 		inidices.append(tally % len(notes))
 
 	return list([notes[i] for i in inidices])
-
-print(get_scale('E', 'Major'))
-print(get_scale('A', 'Natural Minor'))
-print(get_scale('A', 'Dorian Mode'))
-
 
 def quit():
 	global run
@@ -109,15 +102,13 @@ def get_scale_chords(scale_notes):
 				scale_chords.append((n,ct))
 	return scale_chords
 
-#tmp testing
-scale_notes = get_scale('A', 'Natural Minor')
-print (get_scale_chords(scale_notes))
-
 
 def display_random_chord():
 
 	#random from cmajor scale
-	chord = random.choice(cmajor_scale)
+	scale_notes = get_scale('C', 'Major')
+	cmajor_scale_chords = get_scale_chords(scale_notes)
+	chord = random.choice(cmajor_scale_chords)
 	chord_root = chord[0]
 	chord_type = chord[1]
 	chord_interval = intervals[chord_type]
@@ -157,9 +148,8 @@ def display_random_chord():
 """
 run program
 """
-"""
+
 run = True
 while run:
 	display_random_chord()
 
-"""
