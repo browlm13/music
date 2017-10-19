@@ -36,33 +36,50 @@ for n in note_colors:
 
 	note_colors[n] = (third, second, first)
 
-chord_types = ["Major", "Minor"]
-thirds = {
-	'Major' : 4,
-	'Minor' : 3
+chord_types = ["Major", "Minor", "Diminished"]
+
+intervals = {
+	"Major" : (4,7),
+	"Minor" : (3,7),
+	"Diminished" : (3,6)
 }
+
+#scales = {
+	
+#}
+
+cmajor_scale = [('C', 'Major'), ('D','Minor'), ('E','Minor'), ('F','Major'), ('G','Major'), ('A', 'Minor'), ('B','Diminished')]
 
 def quit():
 	global run
 	run = False
 
 
-def get_triad(root, third=4, fifth=7):
+def get_triad(root, intervals=(4,7)):
+
 	root_index = notes.index(root)
-	third = notes[(root_index + third) % len(notes)]
-	fifth = notes[(root_index + fifth) % len(notes)]
+	third = notes[(root_index + intervals[0]) % len(notes)]
+	fifth = notes[(root_index + intervals[1]) % len(notes)]
 	
 	return (root, third, fifth)
 
 def display_random_chord():
-	#random note
-	note = random.choice(notes)
-	chord_type = random.choice(chord_types)
-	chord_notes = get_triad(note, thirds[chord_type])
+
+	#random from cmajor scale
+	chord = random.choice(cmajor_scale)
+	chord_root = chord[0]
+	chord_type = chord[1]
+	chord_interval = intervals[chord_type]
+
+	chord_notes = get_triad(chord_root, chord_interval)
 	chord_colors = [note_colors[note] for note in chord_notes]
 
+	chord_name = chord_root + "-" + chord_type + " : " + str(chord_notes)
 
-	chord_name = note + "-" + chord_type + " : " + str(chord_notes)
+
+	#
+	#	Display
+	#
 
 	width = 600
 	height = 700
@@ -80,10 +97,15 @@ def display_random_chord():
 	c = cv2.waitKey(0)
 	if 'q' == chr(c & 255):
 		quit()
-	#cv2.waitKey(0)
 	cv2.destroyAllWindows()
+
+
+"""
+run program
+"""
 
 run = True
 while run:
 	display_random_chord()
+
 
